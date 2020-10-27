@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tutorcomp.entity.Student;
+import com.tutorcomp.entity.Tutor;
 import com.tutorcomp.service.AdminService;
 
 
@@ -23,16 +24,16 @@ public class adminController {
 	private AdminService adminService;
 	
 	@GetMapping("/studentsList")
-    public String listCustomers(Model theModel) {
-		System.out.println("adminController :: listCustomers :: start");
+    public String listStudent(Model theModel) {
+		System.out.println("adminController :: listStudent :: start");
         List < Student > theStudents = adminService.getStudents();
         theModel.addAttribute("students", theStudents);
-        System.out.println("adminController :: listCustomers :: end");
+        System.out.println("adminController :: listStudent :: end");
         return "list-students";
     }
 	
-	@GetMapping("/showForm")
-    public String showFormForAdd(Model theModel) {
+	@GetMapping("/showFormStudent")
+    public String showFormForAddStudent(Model theModel) {
 		System.out.println("adminController :: showFormForAdd :: start");
 		
         Student theStudent = new Student();
@@ -50,8 +51,8 @@ public class adminController {
         return "redirect:/admin/studentsList";
     }
 
-    @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("studentId") int theId,
+    @GetMapping("/updateFormStudent")
+    public String showFormForUpdateStudent(@RequestParam("studentId") int theId,
         Model theModel) {
         System.out.println("adminController :: showFormForUpdate :: start");
         Student theStudent = adminService.getStudent(theId);
@@ -60,12 +61,59 @@ public class adminController {
         return "student-form";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/deleteStudent")
     public String deleteStudent(@RequestParam("studentId") int theId) {
         System.out.println("adminController :: deleteStudent :: start");
         adminService.deleteStudent(theId);
         System.out.println("adminController :: deleteStudent :: end");
         return "redirect:/admin/studentsList";
     }
+    
+//------------------------------------------------------------------------------------/
+    
+    @GetMapping("/tutorsList")
+    public String listCustomers(Model theModel) {
+		System.out.println("adminController :: listCustomers :: start");
+        List < Tutor > theTutors = adminService.getTutors();
+        theModel.addAttribute("tutors", theTutors);
+        System.out.println("adminController :: listCustomers :: end");
+        return "list-tutors";
+    }
 	
+	@GetMapping("/showFormTutor")
+    public String showFormForAddTutor(Model theModel) {
+		System.out.println("adminController :: showFormForAdd :: start");
+		
+        Tutor theTutor = new Tutor();
+        theModel.addAttribute("tutor", theTutor);
+        
+        System.out.println("adminController :: showFormForAdd :: end");
+        return "tutor-form";
+    }
+
+    @PostMapping("/saveTutor")
+    public String saveTutor(@ModelAttribute("tutor") Tutor theTutor) {
+        System.out.println("adminController :: saveTutor :: start");
+        adminService.saveTutor(theTutor);
+        System.out.println("adminController :: saveTutor :: end");
+        return "redirect:/admin/tutorsList";
+    }
+
+    @GetMapping("/updateFormTutor")
+    public String showFormForUpdateTutor(@RequestParam("tutorId") int theId,
+        Model theModel) {
+        System.out.println("adminController :: showFormForUpdate :: start");
+        Tutor theTutor = adminService.getTutor(theId);
+        theModel.addAttribute("tutor", theTutor);
+        System.out.println("adminController :: showFormForUpdate :: end");
+        return "tutor-form";
+    }
+
+    @GetMapping("/deleteTutor")
+    public String deleteTutor(@RequestParam("tutorId") int theId) {
+        System.out.println("adminController :: deleteTutor :: start");
+        adminService.deleteTutor(theId);
+        System.out.println("adminController :: deleteTutor :: end");
+        return "redirect:/admin/tutorsList";
+    }
 }

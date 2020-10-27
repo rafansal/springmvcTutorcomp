@@ -14,8 +14,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "student")
-public class Student {
+@Table(name = "tutor")
+public class Tutor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,8 +28,8 @@ public class Student {
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "course")
-	private String course;
+	@Column(name = "subject")
+	private String subject;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name = "user_id")
@@ -66,12 +66,12 @@ public class Student {
 		this.email = email;
 	}
 
-	public String getCourse() {
-		return course;
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setCourse(String course) {
-		this.course = course;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	public User getUser() {

@@ -54,7 +54,7 @@ public class StudentDaoImpl implements StudentDao {
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			Student book = session.byId(Student.class).load(id);
-			session.delete(book);
+			session.remove(book);
 		} catch (Exception e) {
 			System.out.println("StudentDaoImpl :: deleteStudent :: ERROR :: " + e);
 		}
@@ -69,9 +69,10 @@ public class StudentDaoImpl implements StudentDao {
 			User user = new User();
 			user.setPassword(theStudent.getPassword());
 			user.setRole(1);
+			user.setId(theStudent.getUserId());
 			user.setUserName(theStudent.getUserName());
 			theStudent.setUser(user);
-			currentSession.save(theStudent);
+			currentSession.saveOrUpdate(theStudent);
 		} catch (Exception e) {
 			System.out.println("StudentDaoImpl :: saveStudent :: ERROR :: " + e);
 		}

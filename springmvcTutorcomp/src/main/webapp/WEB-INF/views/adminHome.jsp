@@ -26,7 +26,7 @@
 						<tr>
 							<th style="text-align:center"><a href="/springmvcTutorcomp/admin/studentsList">Student
 									List</a></th>
-							<th style="text-align:center"><a href="/springmvcTutorcomp/admin/studentsList">Tutor
+							<th style="text-align:center"><a href="/springmvcTutorcomp/admin/tutorsList">Tutor
 									List</a></th>
 						</tr>
 					</table>
