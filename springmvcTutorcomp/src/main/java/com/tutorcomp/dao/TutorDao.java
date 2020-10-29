@@ -12,4 +12,6 @@ public interface TutorDao {
 	void saveTutor(Tutor theTutor);
 
 	Tutor getTutor(int theId);
+
+	Tutor getStudentWithUserId(int userId);
 }

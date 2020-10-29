@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.tutorcomp.entity.Seminar;
 import com.tutorcomp.entity.Student;
 import com.tutorcomp.entity.User;
 
@@ -36,7 +37,6 @@ public class StudentDaoImpl implements StudentDao {
 			StudentList = query.getResultList();
 			for (Student stu : StudentList) {
 				stu.setUserId(stu.getUser().getId());
-				stu.setUserName(stu.getUser().getUserName());
 				stu.setPassword(stu.getUser().getPassword());
 			}
 
@@ -67,10 +67,11 @@ public class StudentDaoImpl implements StudentDao {
 		Session currentSession = sessionFactory.getCurrentSession();
 		try {
 			User user = new User();
-			user.setPassword(theStudent.getPassword());
+			if(theStudent.getPassword() != "")
+				user.setPassword(theStudent.getPassword());
 			user.setRole(1);
 			user.setId(theStudent.getUserId());
-			user.setUserName(theStudent.getUserName());
+			user.setEmail(theStudent.getEmail());
 			theStudent.setUser(user);
 			currentSession.saveOrUpdate(theStudent);
 		} catch (Exception e) {
@@ -81,18 +82,39 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public Student getStudent(int theId) {
-		System.out.println("StudentDaoImpl :: saveStudent :: start");
+		System.out.println("StudentDaoImpl :: getStudent :: start");
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 			Student theStudent = currentSession.get(Student.class, theId);
-			theStudent.setUserId(theStudent.getUser().getId());
-			theStudent.setUserName(theStudent.getUser().getUserName());
-			theStudent.setPassword(theStudent.getUser().getPassword());
-			return theStudent;
+			Student studentdto = theStudent.getDTO();
+			studentdto.setUserId(studentdto.getUser().getId());
+			studentdto.setPassword(studentdto.getUser().getPassword());
+			return studentdto;
 		} catch (Exception e) {
-			System.out.println("StudentDaoImpl :: saveStudent :: ERROR :: " + e);
+			System.out.println("StudentDaoImpl :: getStudent :: ERROR :: " + e);
 		}
-		System.out.println("StudentDaoImpl :: saveStudent :: end");
+		System.out.println("StudentDaoImpl :: getStudent :: end");
+		return null;
+	}
+	
+	@Override
+	public Student getStudentWithUserId(int userId) {
+		System.out.println("StudentDaoImpl :: getStudentWithUserId :: start");
+		try {
+			Session currentSession = sessionFactory.getCurrentSession();
+			Student student;
+			CriteriaBuilder cb = currentSession.getCriteriaBuilder();
+			CriteriaQuery<Student> cq = cb.createQuery(Student.class);
+			Root<Student> root = cq.from(Student.class);
+			cq.select(root);
+			cq.where(cb.equal(root.get("userId"), userId));
+			Query query = currentSession.createQuery(cq);
+			student = (Student) query.getSingleResult();
+			return student;
+		} catch (Exception e) {
+			System.out.println("StudentDaoImpl :: getStudentWithUserId :: ERROR :: " + e);
+		}
+		System.out.println("StudentDaoImpl :: getStudentWithUserId :: end");
 		return null;
 	}
 

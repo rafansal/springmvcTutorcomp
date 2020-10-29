@@ -5,7 +5,7 @@
 <html>
 <head><%@ page isELIgnored="false"%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>javaguides.net</title>
+<title>TUTOR COMP</title>
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
@@ -14,12 +14,14 @@
 <body>
 	<div class="container">
 		<div class="col-md-offset-1 col-md-10">
-			<h2>CRM - Student Relationship Manager</h2>
+			<h2>Student List</h2>
 			<hr />
 
 			<input type="button" value="Add Student"
 				onclick="window.location.href='showFormStudent'; return false;"
-				class="btn btn-primary" /> <br /> <br />
+				class="btn btn-primary" /> 
+			<tb><a href="/springmvcTutorcomp/login">Logout</a></th>
+			<br /> <br />
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Student List</div>
@@ -27,8 +29,8 @@
 				<div class="panel-body">
 					<table class="table table-striped table-bordered">
 						<tr>
-							<th>Name</th>
-							<th>Course</th>
+							<th>First Name</th>
+							<th>Last Name</th>
 							<th>Email</th>
 							<th>Action</th>
 						</tr>
@@ -47,8 +49,8 @@
 							</c:url>
 
 							<tr>
-								<td>${tempStudent.name}</td>
-								<td>${tempStudent.course}</td>
+								<td>${tempStudent.firstName}</td>
+								<td>${tempStudent.lastName}</td>
 								<td>${tempStudent.email}</td>
 
 								<td>

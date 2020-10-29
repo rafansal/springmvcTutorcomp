@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.tutorcomp.entity.Student;
 import com.tutorcomp.entity.Tutor;
 import com.tutorcomp.entity.User;
 
@@ -36,7 +37,6 @@ public class TutorDaoImpl implements TutorDao {
 			TutorList = query.getResultList();
 			for (Tutor stu : TutorList) {
 				stu.setUserId(stu.getUser().getId());
-				stu.setUserName(stu.getUser().getUserName());
 				stu.setPassword(stu.getUser().getPassword());
 			}
 
@@ -67,10 +67,11 @@ public class TutorDaoImpl implements TutorDao {
 		Session currentSession = sessionFactory.getCurrentSession();
 		try {
 			User user = new User();
-			user.setPassword(theTutor.getPassword());
-			user.setRole(1);
+			if(theTutor.getPassword() != "")
+				user.setPassword(theTutor.getPassword());			
+			user.setRole(2);
 			user.setId(theTutor.getUserId());
-			user.setUserName(theTutor.getUserName());
+			user.setEmail(theTutor.getEmail());
 			theTutor.setUser(user);
 			currentSession.saveOrUpdate(theTutor);
 		} catch (Exception e) {
@@ -85,14 +86,35 @@ public class TutorDaoImpl implements TutorDao {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 			Tutor theTutor = currentSession.get(Tutor.class, theId);
-			theTutor.setUserId(theTutor.getUser().getId());
-			theTutor.setUserName(theTutor.getUser().getUserName());
-			theTutor.setPassword(theTutor.getUser().getPassword());
-			return theTutor;
+			Tutor tutordto = theTutor.getDTO();
+			tutordto.setUserId(tutordto.getUser().getId());
+			tutordto.setPassword(tutordto.getUser().getPassword());
+			return tutordto;
 		} catch (Exception e) {
 			System.out.println("TutorDaoImpl :: saveTutor :: ERROR :: " + e);
 		}
 		System.out.println("TutorDaoImpl :: saveTutor :: end");
+		return null;
+	}
+
+	@Override
+	public Tutor getStudentWithUserId(int userId) {
+		System.out.println("StudentDaoImpl :: getStudentWithUserId :: start");
+		try {
+			Session currentSession = sessionFactory.getCurrentSession();
+			Tutor tutor;
+			CriteriaBuilder cb = currentSession.getCriteriaBuilder();
+			CriteriaQuery<Tutor> cq = cb.createQuery(Tutor.class);
+			Root<Tutor> root = cq.from(Tutor.class);
+			cq.select(root);
+			cq.where(cb.equal(root.get("userId"), userId));
+			Query query = currentSession.createQuery(cq);
+			tutor = (Tutor) query.getSingleResult();
+			return tutor;
+		} catch (Exception e) {
+			System.out.println("StudentDaoImpl :: getStudentWithUserId :: ERROR :: " + e);
+		}
+		System.out.println("StudentDaoImpl :: getStudentWithUserId :: end");
 		return null;
 	}
 

@@ -4,6 +4,6 @@ import com.tutorcomp.entity.User;
 
 public interface UserDAO {
 
-	int findRole(User user);
+	User findRole(User user);
 
 }

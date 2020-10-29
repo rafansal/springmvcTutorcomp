@@ -22,23 +22,24 @@ public class Student {
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "firstName")
+	public String firstName;
+	
+	@Column(name = "lastName")
+	private String lastName;
 
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "course")
-	private String course;
-
+	@Column(name = "mobile")
+	private String mobile;
+	
+	@Column(name="user_id", insertable=false, updatable=false)
+	private int userId;
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name = "user_id")
     private User user;
 
-	@Transient
-	private int userId;
-	@Transient
-	private String userName;
 	@Transient
 	private String password;
 	
@@ -50,12 +51,20 @@ public class Student {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -66,12 +75,12 @@ public class Student {
 		this.email = email;
 	}
 
-	public String getCourse() {
-		return course;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setCourse(String course) {
-		this.course = course;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public User getUser() {
@@ -90,20 +99,25 @@ public class Student {
 		this.userId = userId;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Student getDTO() {
+		Student studentDTO = new Student();
+		studentDTO.setId(this.getId());
+		studentDTO.setFirstName(this.getFirstName());
+		studentDTO.setLastName(this.getLastName());
+		studentDTO.setMobile(this.getMobile());
+		studentDTO.setEmail(this.getEmail());
+		studentDTO.setUserId(this.getUserId());
+		studentDTO.setUser(this.getUser());
+		studentDTO.setPassword(this.getPassword());
+		return studentDTO;
 	}
 	
 	

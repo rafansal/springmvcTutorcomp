@@ -23,15 +23,15 @@
 				</div>
 				<div class="panel-body">
 					<form:form action="loginAction" cssClass="form-horizontal"
-						method="get" modelAttribute="user">
+						method="post" modelAttribute="user">
 
 						<!-- need to associate this data with customer id -->
 						<form:hidden path="id" />
 
 						<div class="form-group">
-							<label for="userName" class="col-md-3 control-label">User Name</label>
+							<label for="email" class="col-md-3 control-label">Email</label>
 							<div class="col-md-9">
-								<form:input path="userName" cssClass="form-control" />
+								<form:input path="email" cssClass="form-control" />
 							</div>
 						</div>
 						<div class="form-group">

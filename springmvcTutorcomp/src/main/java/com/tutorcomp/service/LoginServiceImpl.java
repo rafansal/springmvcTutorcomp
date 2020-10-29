@@ -15,10 +15,10 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Override
 	@Transactional
-	public int checkLogin(User user) {
-		int role;
-		role = userDAO.findRole(user);
-		return role;
+	public User checkLogin(User user) {
+		User User;
+		User = userDAO.findRole(user);
+		return User;
 	}
 
 }

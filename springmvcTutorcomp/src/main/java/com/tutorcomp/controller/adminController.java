@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tutorcomp.entity.Seminar;
 import com.tutorcomp.entity.Student;
 import com.tutorcomp.entity.Tutor;
 import com.tutorcomp.service.AdminService;
@@ -115,5 +116,45 @@ public class adminController {
         adminService.deleteTutor(theId);
         System.out.println("adminController :: deleteTutor :: end");
         return "redirect:/admin/tutorsList";
+    }
+    
+    //-------------------------------------------------------------------------------/
+    
+    @GetMapping("/seminarsList")
+    public String listSeminars(Model theModel) {
+		System.out.println("adminController :: listCustomers :: start");
+        List < Seminar > theSeminars = adminService.getSeminars();
+        theModel.addAttribute("seminars", theSeminars);
+        System.out.println("adminController :: listCustomers :: end");
+        return "list-seminars";
+    }
+	
+	@GetMapping("/showFormSeminar")
+    public String showFormForAddSeminar(Model theModel) {
+		System.out.println("adminController :: showFormForAdd :: start");
+		
+        Seminar theSeminar = new Seminar();
+        theModel.addAttribute("student", adminService.getStudents());
+        theModel.addAttribute("seminar", theSeminar);
+        
+        System.out.println("adminController :: showFormForAdd :: end");
+        return "seminar-form";
+    }
+
+    @PostMapping("/saveSeminar")
+    public String saveSeminar(@ModelAttribute("seminar") Seminar theSeminar) {
+        System.out.println("adminController :: saveSeminar :: start");
+        adminService.saveSeminar(theSeminar);
+        System.out.println("adminController :: saveSeminar :: end");
+        return "redirect:/admin/seminarsList";
+    }
+
+
+    @GetMapping("/deleteSeminar")
+    public String deleteSeminar(@RequestParam("seminarId") int theId) {
+        System.out.println("adminController :: deleteSeminar :: start");
+        adminService.deleteSeminar(theId);
+        System.out.println("adminController :: deleteSeminar :: end");
+        return "redirect:/admin/seminarsList";
     }
 }

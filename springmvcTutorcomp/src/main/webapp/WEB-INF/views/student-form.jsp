@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Spring MVC 5 - form handling | Java Guides</title>
+<title>TUTOR COMP</title>
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
@@ -16,8 +16,7 @@
 <body>
 	<div class="container">
 		<div class="col-md-offset-2 col-md-7">
-			<h2 class="text-center">Spring MVC 5 + Hibernate 5 + JSP + MySQL
-				Example</h2>
+			<h2 class="text-center">Student List</h2>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Add Student</div>
@@ -30,16 +29,16 @@
 						<form:hidden path="id" />
 						<form:hidden path="userId" />
 						<div class="form-group">
-							<label for="name" class="col-md-3 control-label">First
+							<label for="firstName" class="col-md-3 control-label">First
 								Name</label>
 							<div class="col-md-9">
-								<form:input path="name" cssClass="form-control" />
+								<form:input path="firstName" cssClass="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="course" class="col-md-3 control-label">Course</label>
+							<label for="lastName" class="col-md-3 control-label">Last Name</label>
 							<div class="col-md-9">
-								<form:input path="course" cssClass="form-control" />
+								<form:input path="lastName" cssClass="form-control" />
 							</div>
 						</div>
 
@@ -51,16 +50,16 @@
 						</div>
 						
 						<div class="form-group">
-							<label for="userId" class="col-md-3 control-label">User Id</label>
+							<label for="mobile" class="col-md-3 control-label">Mobile</label>
 							<div class="col-md-9">
-								<form:input path="userId" cssClass="form-control"  disabled="true" />
+								<form:input path="mobile" cssClass="form-control" />
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="userName" class="col-md-3 control-label">User Name</label>
+							<label for="userId" class="col-md-3 control-label">User Id</label>
 							<div class="col-md-9">
-								<form:input path="userName" cssClass="form-control" />
+								<form:input path="userId" cssClass="form-control"  disabled="true" />
 							</div>
 						</div>
 						

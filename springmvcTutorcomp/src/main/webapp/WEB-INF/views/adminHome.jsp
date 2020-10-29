@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Spring MVC 5 - form handling | Java Guides</title>
+<title>TUTOR COMP</title>
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
@@ -19,15 +19,17 @@
 			<h2 class="text-center">Admin Home</h2>
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<div class="panel-title">Add Customer</div>
+					<div class="panel-title">Options</div>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered">
 						<tr>
-							<th style="text-align:center"><a href="/springmvcTutorcomp/admin/studentsList">Student
-									List</a></th>
-							<th style="text-align:center"><a href="/springmvcTutorcomp/admin/tutorsList">Tutor
-									List</a></th>
+							<th style="text-align: center"><a
+								href="/springmvcTutorcomp/admin/studentsList">Student List</a></th>
+							<th style="text-align: center"><a
+								href="/springmvcTutorcomp/admin/tutorsList">Tutor List</a></th>
+							<th style="text-align: center"><a
+								href="/springmvcTutorcomp/admin/seminarsList">Seminar List</a></th>
 						</tr>
 					</table>
 				</div>

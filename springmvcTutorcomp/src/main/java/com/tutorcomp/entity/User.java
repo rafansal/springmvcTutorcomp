@@ -13,21 +13,21 @@ import javax.validation.constraints.NotNull;
 public class User {
 	
 	public User() {
-		
+		this.password ="tutorcomp";
 	}
 	
-	public User(int role) {
+	public User(int id,int role) {
 		this.role = role;
+		this.id = id;
 	}
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private int id;
-	
-	@NotNull
-	@Column(unique = true,name = "user_name")
-    private String userName;
+
+	@Column(unique = true,name = "email")
+    private String email;
 	
 	@Column(name = "password")
     private String password;
@@ -42,13 +42,13 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getUserName() {
-		return userName;
+	
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

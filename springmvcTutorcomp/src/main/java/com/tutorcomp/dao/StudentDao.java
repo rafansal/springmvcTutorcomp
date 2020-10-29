@@ -14,4 +14,6 @@ public interface StudentDao {
 
 	Student getStudent(int theId);
 
+	Student getStudentWithUserId(int userId);
+
 }

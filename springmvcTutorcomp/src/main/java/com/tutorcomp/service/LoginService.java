@@ -4,6 +4,6 @@ import com.tutorcomp.entity.User;
 
 public interface LoginService {
 
-	public int checkLogin(User user);
+	public User checkLogin(User user);
 
 }

@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tutor")
@@ -22,23 +21,24 @@ public class Tutor {
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "firstName")
+	private String firstName;
+	
+	@Column(name = "lastName")
+	private String lastName;
 
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "subject")
-	private String subject;
+	@Column(name = "mobile")
+	private String mobile;
 
+	@Column(name="user_id", insertable=false, updatable=false)
+	private int userId;
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name = "user_id")
     private User user;
 
-	@Transient
-	private int userId;
-	@Transient
-	private String userName;
 	@Transient
 	private String password;
 	
@@ -50,12 +50,20 @@ public class Tutor {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -65,13 +73,13 @@ public class Tutor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getSubject() {
-		return subject;
+	
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public User getUser() {
@@ -90,14 +98,6 @@ public class Tutor {
 		this.userId = userId;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -106,5 +106,16 @@ public class Tutor {
 		this.password = password;
 	}
 	
-	
+	public Tutor getDTO() {
+		Tutor tutorDTO = new Tutor();
+		tutorDTO.setId(this.getId());
+		tutorDTO.setFirstName(this.firstName);
+		tutorDTO.setLastName(this.lastName);
+		tutorDTO.setEmail(this.getEmail());
+		tutorDTO.setMobile(this.getMobile());
+		tutorDTO.setUserId(this.getUserId());
+		tutorDTO.setUser(this.getUser());
+		tutorDTO.setPassword(this.getPassword());
+		return tutorDTO;
+	}
 }

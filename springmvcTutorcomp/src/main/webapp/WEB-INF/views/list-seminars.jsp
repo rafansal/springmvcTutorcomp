@@ -5,7 +5,7 @@
 <html>
 <head><%@ page isELIgnored="false"%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>javaguides.net</title>
+<title>TUTOR COMP</title>
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
@@ -14,49 +14,48 @@
 <body>
 	<div class="container">
 		<div class="col-md-offset-1 col-md-10">
-			<h2>Tutor List</h2>
+			<h2>Seminar List</h2>
 			<hr />
 
-			<input type="button" value="Add Tutor"
-				onclick="window.location.href='showFormTutor'; return false;"
+			<input type="button" value="Add Seminar"
+				onclick="window.location.href='showFormSeminar'; return false;"
 				class="btn btn-primary" />
 				<tb><a href="/springmvcTutorcomp/login">Logout</a></th>
-				<br /> <br />
+				 <br /> <br />
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<div class="panel-title">Tutor List</div>
+					<div class="panel-title">Seminar List</div>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered">
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
+							<th>Student Name</th>
+							<th>Tutor Name</th>
+							<th>Date</th>
 							<th>Action</th>
 						</tr>
 
-						<!-- loop over and print our tutors -->
-						<c:forEach var="tempTutor" items="${tutors}">
+						<!-- loop over and print our seminars -->
+						<c:forEach var="tempSeminar" items="${seminars}">
 
-							<!-- construct an "update" link with tutor id -->
-							<c:url var="updateLink" value="/admin/updateFormTutor">
-								<c:param name="tutorId" value="${tempTutor.id}" />
+							<!-- construct an "update" link with seminar id -->
+							<c:url var="updateLink" value="/admin/updateFormSeminar">
+								<c:param name="seminarId" value="${tempSeminar.id}" />
 							</c:url>
 
-							<!-- construct an "delete" link with tutor id -->
-							<c:url var="deleteLink" value="/admin/deleteTutor">
-								<c:param name="tutorId" value="${tempTutor.id}" />
+							<!-- construct an "delete" link with seminar id -->
+							<c:url var="deleteLink" value="/admin/deleteSeminar">
+								<c:param name="seminarId" value="${tempSeminar.id}" />
 							</c:url>
 
 							<tr>
-								<td>${tempTutor.firstName}</td>
-								<td>${tempTutor.lastName}</td>
-								<td>${tempTutor.email}</td>
+								<td>${tempSeminar.studentName}</td>
+								<td>${tempSeminar.tutorName}</td>
+								<td>${tempSeminar.dateString}</td>
 
 								<td>
-									<!-- display the update link --> <a href="${updateLink}">Update</a>
-									| <a href="${deleteLink}"
-									onclick="if (!(confirm('Are you sure you want to delete this tutor?'))) return false">Delete</a>
+									<a href="${deleteLink}"
+									onclick="if (!(confirm('Are you sure you want to delete this seminar?'))) return false">Delete</a>
 								</td>
 
 							</tr>
