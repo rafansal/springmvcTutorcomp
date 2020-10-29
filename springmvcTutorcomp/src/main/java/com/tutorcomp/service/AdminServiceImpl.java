@@ -75,7 +75,6 @@ public class AdminServiceImpl implements AdminService {
         tutorDAO.deleteTutor(theId);
     }
     
-   //------------------------------------------------------------/
     
     @Override
     @Transactional
