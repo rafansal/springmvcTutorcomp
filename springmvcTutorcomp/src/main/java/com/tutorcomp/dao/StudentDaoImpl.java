@@ -18,10 +18,13 @@ import com.tutorcomp.entity.User;
 
 @Repository
 @SuppressWarnings("rawtypes")
-public class StudentDaoImpl implements StudentDao {
+public class StudentDaoImpl extends ParentDAO implements StudentDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private SeminarDao seminarDao;
 
 	@Override
 	public List<Student> getStudents() {
@@ -53,8 +56,16 @@ public class StudentDaoImpl implements StudentDao {
 		System.out.println("StudentDaoImpl :: deleteStudent :: start");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			Student book = session.byId(Student.class).load(id);
-			session.remove(book);
+			
+			//delete all seminar related with this student
+			seminarDao.deleteStudentSeminars(id, session);
+			
+			String query = "update Student model set model.status = :status where model.id = :id";
+			Query createQuery = session.createQuery(query);
+			createQuery.setParameter("id", id);
+			createQuery.setParameter("status", serverConstants.deleted);
+			createQuery.executeUpdate();
+			session.flush();
 		} catch (Exception e) {
 			System.out.println("StudentDaoImpl :: deleteStudent :: ERROR :: " + e);
 		}
@@ -70,6 +81,7 @@ public class StudentDaoImpl implements StudentDao {
 			if(theStudent.getPassword() != "")
 				user.setPassword(theStudent.getPassword());
 			user.setRole(1);
+			user.setStatus(serverConstants.active);
 			user.setId(theStudent.getUserId());
 			user.setEmail(theStudent.getEmail());
 			theStudent.setUser(user);

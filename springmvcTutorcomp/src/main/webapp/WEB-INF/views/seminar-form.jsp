@@ -20,7 +20,14 @@
 			<h2 class="text-center">Seminar Creation</h2>
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<div class="panel-title">Add Seminar</div>
+					<div class="panel-title">Add Seminar
+						<button onclick="goBack()">Go Back</button>
+						<script>
+							function goBack() {
+							  window.history.back();
+							}
+						</script>
+					</div>
 				</div>
 				<div class="panel-body">
 					<form:form action="saveSeminar" cssClass="form-horizontal"
@@ -37,7 +44,7 @@
 											Class.forName("com.mysql.jdbc.Driver").newInstance();
 											Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo", "root",
 													"admin");
-											String Query = "select * from student";
+											String Query = "select * from student where status = 1";
 											Statement stm = con.createStatement();
 											ResultSet rs = stm.executeQuery(Query);
 											while (rs.next()) {
@@ -60,7 +67,7 @@
 											Class.forName("com.mysql.jdbc.Driver").newInstance();
 											Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo", "root",
 													"admin");
-											String Query = "select * from tutor";
+											String Query = "select * from tutor where status = 1";
 											Statement stm = con.createStatement();
 											ResultSet rs = stm.executeQuery(Query);
 											while (rs.next()) {

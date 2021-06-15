@@ -26,17 +26,17 @@ import com.tutorcomp.entity.Tutor;
 
 @Repository
 @SuppressWarnings("rawtypes")
-public class SeminarDaoImp implements SeminarDao {
+public class SeminarDaoImp extends ParentDAO implements SeminarDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	private StudentDao studentDao;
-	
+
 	@Autowired
 	private TutorDao tutorDao;
-	
+
 	@Override
 	public List<Seminar> getSeminars() {
 		System.out.println("SeminarDaoImpl :: getSeminars :: start");
@@ -47,14 +47,15 @@ public class SeminarDaoImp implements SeminarDao {
 			CriteriaQuery<Seminar> cq = cb.createQuery(Seminar.class);
 			Root<Seminar> root = cq.from(Seminar.class);
 			cq.select(root);
+//			cq.where(cb.equal(root.get("status"), serverConstants.active));	
 			Query query = session.createQuery(cq);
 			SeminarList = query.getResultList();
 			for (Seminar semi : SeminarList) {
-				semi.setDateString((semi.getDate() != null? semi.getDate().toString():""));
+				semi.setDateString((semi.getDate() != null ? semi.getDate().toString() : ""));
 				semi.setStudentName(semi.getStudent().getFirstName());
 				semi.setTutorName(semi.getTutor().getFirstName());
 			}
-			
+
 			return SeminarList;
 		} catch (Exception e) {
 			System.out.println("SeminarDaoImpl :: getSeminars :: ERROR :: " + e);
@@ -62,14 +63,18 @@ public class SeminarDaoImp implements SeminarDao {
 		System.out.println("SeminarDaoImpl :: getSeminars :: end");
 		return null;
 	}
-	
+
 	@Override
 	public void deleteSeminar(int id) {
 		System.out.println("SeminarDaoImpl :: deleteSeminar :: start");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			Seminar book = session.byId(Seminar.class).load(id);
-			session.remove(book);
+			String query = "update Seminar model set model.status = :status where model.id = :id";
+			Query createQuery = session.createQuery(query);
+			createQuery.setParameter("id", id);
+			createQuery.setParameter("status", serverConstants.deleted);
+			createQuery.executeUpdate();
+			session.flush();
 		} catch (Exception e) {
 			System.out.println("SeminarDaoImpl :: deleteSeminar :: ERROR :: " + e);
 		}
@@ -82,7 +87,7 @@ public class SeminarDaoImp implements SeminarDao {
 		Session currentSession = sessionFactory.getCurrentSession();
 		try {
 //			String sDate1="31/12/1998 23:50";
-			if(theSeminar.getDateString() != "") {
+			if (theSeminar.getDateString() != "") {
 				theSeminar.setDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(theSeminar.getDateString()));
 			}
 			Student student = new Student();
@@ -92,6 +97,7 @@ public class SeminarDaoImp implements SeminarDao {
 			tutor.setId(theSeminar.getTutorId());
 			theSeminar.setTutor(tutor);
 			theSeminar.getStudent().setId(theSeminar.getStudentId());
+			theSeminar.setStatus(serverConstants.active);
 			currentSession.saveOrUpdate(theSeminar);
 		} catch (Exception e) {
 			System.out.println("SeminarDaoImpl :: saveSeminar :: ERROR :: " + e);
@@ -123,12 +129,12 @@ public class SeminarDaoImp implements SeminarDao {
 			CriteriaQuery<Seminar> cq = cb.createQuery(Seminar.class);
 			Root<Seminar> root = cq.from(Seminar.class);
 			cq.select(root);
-			if(type=="student") {
+			if (type == "student") {
 				cq.where(cb.equal(root.get("student").get("userId"), userId));
-			}
-			else if (type=="tutor") {
+			} else if (type == "tutor") {
 				cq.where(cb.equal(root.get("tutor").get("userId"), userId));
 			}
+			cq.where(cb.equal(root.get("status"), serverConstants.active));			
 			Query query = session.createQuery(cq);
 			SeminarList = query.getResultList();
 			for (Seminar semi : SeminarList) {
@@ -136,7 +142,7 @@ public class SeminarDaoImp implements SeminarDao {
 				semi.setStudentName(semi.getStudent().getFirstName());
 				semi.setTutorName(semi.getTutor().getFirstName());
 			}
-			
+
 			return SeminarList;
 		} catch (Exception e) {
 			System.out.println("SeminarDaoImpl :: getSeminarsForId :: ERROR :: " + e);
@@ -144,6 +150,37 @@ public class SeminarDaoImp implements SeminarDao {
 		System.out.println("SeminarDaoImpl :: getSeminarsForId :: end");
 		return null;
 	}
-	
-	
+
+	@Override
+	public void deleteStudentSeminars(int studentId,Session session) {
+		System.out.println("SeminarDaoImpl :: deleteStudentSeminars :: start");
+		try {
+			String query = "update Seminar model set model.status = :status where model.studentId = :studentId";
+			Query createQuery = session.createQuery(query);
+			createQuery.setParameter("studentId", studentId);
+			createQuery.setParameter("status", serverConstants.deleted);
+			createQuery.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("SeminarDaoImpl :: deleteStudentSeminars :: ERROR :: " + e);
+		}
+		System.out.println("SeminarDaoImpl :: deleteStudentSeminars :: end");
+
+	}
+
+	@Override
+	public void deleteTutorSeminars(int tutorId,Session session) {
+		System.out.println("SeminarDaoImpl :: deleteStudentSeminars :: start");
+		try {
+			String query = "update Seminar model set model.status = :status where model.tutorId = :tutorId";
+			Query createQuery = session.createQuery(query);
+			createQuery.setParameter("tutorId", tutorId);
+			createQuery.setParameter("status", serverConstants.deleted);
+			createQuery.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("SeminarDaoImpl :: deleteStudentSeminars :: ERROR :: " + e);
+		}
+		System.out.println("SeminarDaoImpl :: deleteStudentSeminars :: end");
+
+	}
+
 }

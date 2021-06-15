@@ -39,6 +39,9 @@ public class Student {
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name = "user_id")
     private User user;
+	
+	@Column(name = "status")
+	private int status;
 
 	@Transient
 	private String password;
@@ -106,7 +109,14 @@ public class Student {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public int getStatus() {
+		return status;
+	}
 
+	public void setStatus(int status) {
+		this.status = status;
+	}	
 	public Student getDTO() {
 		Student studentDTO = new Student();
 		studentDTO.setId(this.getId());
@@ -117,6 +127,7 @@ public class Student {
 		studentDTO.setUserId(this.getUserId());
 		studentDTO.setUser(this.getUser());
 		studentDTO.setPassword(this.getPassword());
+		studentDTO.setStatus(this.status);
 		return studentDTO;
 	}
 	

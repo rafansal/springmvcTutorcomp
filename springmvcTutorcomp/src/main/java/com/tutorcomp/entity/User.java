@@ -35,6 +35,9 @@ public class User {
 	@Column(name = "role")
     private int role;
 
+	@Column(name = "status")
+	private int status;
+	
 	public int getId() {
 		return id;
 	}
@@ -67,4 +70,11 @@ public class User {
 		this.role = role;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}	
 }

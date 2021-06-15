@@ -17,6 +17,7 @@
 	<div class="container">
 		<div class="col-md-offset-2 col-md-7">
 			<h2 class="text-center">Admin Home</h2>
+			<a href="/springmvcTutorcomp/login">Logout</a>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Options</div>

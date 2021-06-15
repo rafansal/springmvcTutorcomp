@@ -19,7 +19,13 @@
 
 			<input type="button" value="Add Student"
 				onclick="window.location.href='showFormStudent'; return false;"
-				class="btn btn-primary" /> 
+				class="btn btn-primary" />
+			<button onclick="goBack()">Go Back</button>
+				<script>
+					function goBack() {
+					  window.history.back();
+					}
+				</script>
 			<tb><a href="/springmvcTutorcomp/login">Logout</a></th>
 			<br /> <br />
 			<div class="panel panel-info">
@@ -32,6 +38,7 @@
 							<th>First Name</th>
 							<th>Last Name</th>
 							<th>Email</th>
+							<th>Status</th>
 							<th>Action</th>
 						</tr>
 
@@ -52,6 +59,14 @@
 								<td>${tempStudent.firstName}</td>
 								<td>${tempStudent.lastName}</td>
 								<td>${tempStudent.email}</td>
+								<td>
+									<c:choose>
+								        <c:when test="${tempStudent.status == 1}">Active</c:when>
+								        <c:when test="${tempStudent.status == 2}">Modified</c:when>
+								        <c:when test="${tempStudent.status == 3}">Deleted</c:when>
+								        <c:otherwise>undefined</c:otherwise>
+								    </c:choose>
+							    </td>
 
 								<td>
 									<!-- display the update link --> <a href="${updateLink}">Update</a>

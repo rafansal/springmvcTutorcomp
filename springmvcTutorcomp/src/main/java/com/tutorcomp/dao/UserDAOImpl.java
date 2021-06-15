@@ -16,7 +16,7 @@ import com.tutorcomp.entity.User;
 
 @Repository
 @SuppressWarnings("rawtypes")
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl extends ParentDAO implements UserDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -36,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
 //			criteria.setProjection(projectionList);
 //			criteria.setResultTransformer(Transformers.aliasToBean(User.class));
 //			User resulttest = (User) criteria.uniqueResult();
-			
+			if(user.getEmail() != null && user.getPassword() != null) {
 			String query = "select new com.tutorcomp.entity.User(model.id,model.role) from User model where model.email = :email and model.password = :password";
 			Query hqlQuery = session.createQuery(query);
 			hqlQuery.setParameter("email", user.getEmail());
@@ -44,6 +44,7 @@ public class UserDAOImpl implements UserDAO {
 //			System.out.println("role::"+hqlQuery.uniqueResult());
 			User result = (User) hqlQuery.uniqueResult();
 			return result;
+			}
 		} catch (Exception e) {
 			System.out.println("UserDAOImpl :: findRole :: ERROR :: " + e);
 

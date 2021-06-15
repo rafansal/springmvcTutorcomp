@@ -12,16 +12,20 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.tutorcomp.entity.Seminar;
 import com.tutorcomp.entity.Student;
 import com.tutorcomp.entity.Tutor;
 import com.tutorcomp.entity.User;
 
 @Repository
 @SuppressWarnings("rawtypes")
-public class TutorDaoImpl implements TutorDao {
+public class TutorDaoImpl extends ParentDAO implements TutorDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private SeminarDao seminarDao;
 
 	@Override
 	public List<Tutor> getTutors() {
@@ -53,8 +57,15 @@ public class TutorDaoImpl implements TutorDao {
 		System.out.println("TutorDaoImpl :: deleteTutor :: start");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			Tutor book = session.byId(Tutor.class).load(id);
-			session.remove(book);
+			
+			//to delete all the seminar related with this tutor
+			seminarDao.deleteTutorSeminars(id, session);
+			
+			String query = "update Tutor model set model.status = :status where model.id = :id";
+			Query createQuery = session.createQuery(query);
+			createQuery.setParameter("id", id);
+			createQuery.setParameter("status", serverConstants.deleted);
+			createQuery.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("TutorDaoImpl :: deleteTutor :: ERROR :: " + e);
 		}
@@ -70,6 +81,7 @@ public class TutorDaoImpl implements TutorDao {
 			if(theTutor.getPassword() != "")
 				user.setPassword(theTutor.getPassword());			
 			user.setRole(2);
+			user.setStatus(serverConstants.active);
 			user.setId(theTutor.getUserId());
 			user.setEmail(theTutor.getEmail());
 			theTutor.setUser(user);

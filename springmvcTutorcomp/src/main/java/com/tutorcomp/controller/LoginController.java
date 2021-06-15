@@ -1,6 +1,10 @@
 package com.tutorcomp.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,20 +36,19 @@ public class LoginController {
 		System.out.println("LoginController :: login :: start");
 		User user = new User();
 		theModel.addAttribute("user", user);
-		System.out.println("LoginController :: login :: end");
 		return "login";
 	}
 
 	@PostMapping("/loginAction")
 	public String saveCustomer(@ModelAttribute("user") User user, Model theModel) {
 		User useDB = loginService.checkLogin(user);
-		if (useDB.getRole() == 0)
+		if (useDB !=null && useDB.getRole() == 0)
 			return "adminHome";
-		else if (useDB.getRole() == 1) {
+		else if (useDB !=null && useDB.getRole() == 1) {
 			List<Seminar> theSeminars = studentService.getStudentSeminar(useDB.getId());
 			theModel.addAttribute("seminars", theSeminars);
 			return "studentHome";
-		} else if (useDB.getRole() == 2) {
+		} else if (useDB !=null && useDB.getRole() == 2) {
 			List<Seminar> theSeminars = tutorService.getTutorSeminar(useDB.getId());
 			theModel.addAttribute("seminars", theSeminars);
 			return "tutorHome";

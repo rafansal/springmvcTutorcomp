@@ -39,6 +39,9 @@ public class Tutor {
 	@JoinColumn(name = "user_id")
     private User user;
 
+	@Column(name = "status")
+	private int status;
+	
 	@Transient
 	private String password;
 	
@@ -106,6 +109,13 @@ public class Tutor {
 		this.password = password;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}	
 	public Tutor getDTO() {
 		Tutor tutorDTO = new Tutor();
 		tutorDTO.setId(this.getId());
@@ -116,6 +126,7 @@ public class Tutor {
 		tutorDTO.setUserId(this.getUserId());
 		tutorDTO.setUser(this.getUser());
 		tutorDTO.setPassword(this.getPassword());
+		tutorDTO.setStatus(this.status);
 		return tutorDTO;
 	}
 }

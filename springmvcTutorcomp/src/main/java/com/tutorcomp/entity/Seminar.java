@@ -54,6 +54,9 @@ public class Seminar {
 	@Transient
 	private String dateString;
 	
+	@Column(name = "status")
+	private int status;
+	
 	public Seminar getDto() {
 		Seminar dto = new Seminar();
 		dto.setStudentId(this.getStudentId());
@@ -65,6 +68,7 @@ public class Seminar {
 		dto.setStudentName(this.getStudentName());
 		dto.setTutorName(this.getTutorName());		
 		dto.setDateString(this.getDateString());
+		dto.setStatus(this.status);
 		return dto;
 	}
 	public int getStudentId() {
@@ -121,5 +125,13 @@ public class Seminar {
 	}
 	public void setDateString(String dateString) {
 		this.dateString = dateString;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}	
 }
