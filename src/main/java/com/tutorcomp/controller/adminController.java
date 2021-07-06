@@ -149,7 +149,7 @@ public class adminController {
         return "redirect:/admin/seminarsList";
     }
 
-
+	//heloo
     @GetMapping("/deleteSeminar")
     public String deleteSeminar(@RequestParam("seminarId") int theId) {
         System.out.println("adminController :: deleteSeminar :: start");
