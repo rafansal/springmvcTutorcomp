@@ -85,6 +85,7 @@ public class TutorDaoImpl extends ParentDAO implements TutorDao {
 			user.setId(theTutor.getUserId());
 			user.setEmail(theTutor.getEmail());
 			theTutor.setUser(user);
+			theTutor.setStatus(serverConstants.active);
 			currentSession.saveOrUpdate(theTutor);
 		} catch (Exception e) {
 			System.out.println("TutorDaoImpl :: saveTutor :: ERROR :: " + e);

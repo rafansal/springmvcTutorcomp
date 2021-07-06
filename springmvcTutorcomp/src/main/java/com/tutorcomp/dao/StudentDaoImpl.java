@@ -85,6 +85,7 @@ public class StudentDaoImpl extends ParentDAO implements StudentDao {
 			user.setId(theStudent.getUserId());
 			user.setEmail(theStudent.getEmail());
 			theStudent.setUser(user);
+			theStudent.setStatus(serverConstants.active);
 			currentSession.saveOrUpdate(theStudent);
 		} catch (Exception e) {
 			System.out.println("StudentDaoImpl :: saveStudent :: ERROR :: " + e);
