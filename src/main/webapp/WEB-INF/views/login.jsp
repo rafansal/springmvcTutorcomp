@@ -11,13 +11,12 @@
 	rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<div style='position:absolute;z-index:0;left:0;top:0;width:100%;height:100%'><img src='backGroundPic.jpg' style='width:100%;height:100%' alt='[]' /></div>
 </head>
 
 <body>
 	<div class="container">
 		<div class="col-md-offset-2 col-md-7">
-			<h2 class="text-center">Welcome To TutorCom</h2>
+			<h2 class="text-center">Login Page</h2>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Login</div>
@@ -44,7 +43,7 @@
 						<div class="form-group">
 							<!-- Button -->
 							<div class="col-md-offset-3 col-md-9">
-								<form:button cssClass="btn btn-primary">Submit</form:button>
+								<input class="btn btn-success" type="submit" value="login" />
 							</div>
 						</div>
 
