@@ -43,7 +43,7 @@
 						<div class="form-group">
 							<!-- Button -->
 							<div class="col-md-offset-3 col-md-9">
-								<form:button cssClass="btn btn-primary">Submit</form:button>
+								<input class="btn btn-success" type="submit" value="login" />
 							</div>
 						</div>
 
