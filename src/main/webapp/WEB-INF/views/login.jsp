@@ -16,7 +16,7 @@
 <body>
 	<div class="container">
 		<div class="col-md-offset-2 col-md-7">
-			<h2 class="text-center">Welcome To TutorCom</h2>
+			<h2 class="text-center">Login Page</h2>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Login</div>
