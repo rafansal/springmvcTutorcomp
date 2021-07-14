@@ -11,6 +11,7 @@
 	rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<div style='position:absolute;z-index:0;left:0;top:0;width:100%;height:100%'><img src='backGroundPic.jpg' style='width:100%;height:100%' alt='[]' /></div>
 </head>
 
 <body>
